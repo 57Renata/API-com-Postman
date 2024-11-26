@@ -1,0 +1,1279 @@
+{
+	"info": {
+		"_postman_id": "2484132d-adbb-4965-a7b6-f10c278cc07a",
+		"name": "Login",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25621200"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "login  admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.globals.set(\"tokenAdmin\", pm.response.json().token)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mail\": \"sysadmin@qacoders.com\",\r\n    \"password\": \"1234@Test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}login/",
+							"host": [
+								"{{url}}login"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "login",
+					"item": [
+						{
+							"name": "create user-login",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"function firstName() {\r",
+											"\r",
+											"    let firstName = [\"Rebeca\", \"Joao\", \"Pedro\", \"Kaike\", \"Flavia\", \"Renato\", \"Brenda\", \"Adriamo\", \"Carla\", \"Gledson\", \"Rodrigo\", \"Pablo\", \"Raissa\", \"Yasmin\", \"William\", \"Maria\", \"Marta\", \"Mitra\", \"Liza\", \"Renata\", \"Laryssa\", \"Walter\", \"Eude\", \"Rafaela\", \"Claudia\", \"Edson\", \"Kailza\", \"Cleide\", \"Vanda\", \"Jhonata\", \"Joelma\", \"Gilda\", \"Leide\", \"Silvia\", \"Sandra\", \"Deibson\", \"Kailane\", \"Silvane\", \"Jose\", \"Jair\", \"Claudio\", \"Silmara\", \"Gilmara\", \"Leila\", \"Joab\", \"Josenildo\", \"Camila\", \"Joseane\", \"Edcleia\", \"Edmundo\", \"Josimar\", \"Jacinta\", \"Zila\", \"Keniel\", \"Geilsa\", \"Ludimila\", \"Mirly\", \"Genari\", \"Daniel\", \"Danilo\", \"Janice\", \"Ana\", \"Gilberto\", \"Edilson\", \"Sircleide\", \"Jailso\"]\r",
+											"\r",
+											"    let randomItem = firstName[Math.floor(Math.random() * firstName.length)];\r",
+											"\r",
+											"    return randomItem\r",
+											"\r",
+											"} \r",
+											"\r",
+											"pm.environment.set(\"FirstName\", firstName());\r",
+											"\r",
+											"  \r",
+											"function lastName() {\r",
+											"\r",
+											"    let lastName = [\"Alves de Sousa\", \"Silva Santos\", \"Alves de Melo\", \"de Sousa\", \"Campo de Melo\", \"Henrique de Lima\", \"Joaquim de Carvalho\", \"Jorge de Melo\", \"da Silva Neto\", \"de Sousa Carvalho\", \"Campos da Silva\", \"Rodrigues da Silva\", \"Campos Sobral\", \"Campos de Melo\", \"Rocha de Macedo\", \"Ferreira de Melo\", \"Ferreira de Sousa\", \"Campos Sobral da Silva\", \"Jorge de Melo Junior\", \"de Freita\", \"Rocha da Silva Carvalho\", \"de Lima Ferreira Neto\", \"Campos de Melo Silva\", \"Campos Rodrigues da Silva\", \"Alves de Macedo Sousa\"];\r",
+											"\r",
+											"    let randomItem = lastName[Math.floor(Math.random() * lastName.length)];\r",
+											"\r",
+											"    return randomItem\r",
+											"\r",
+											"}\r",
+											"\r",
+											"pm.environment.set(\"LastName\", lastName());\r",
+											"\r",
+											"pm.environment.set(\"FullName\", pm.environment.get(\"FirstName\") + \" \" + pm.environment.get(\"LastName\"));\r",
+											"\r",
+											"\r",
+											"function generatePassword() {\r",
+											"    let chars = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%\";\r",
+											"    let comprimentoMinimo = 8;\r",
+											"    let comprimentoMaximo = 12;\r",
+											"    let senhaArray = [];\r",
+											"senhaArray.push(chars[Math.floor(Math.random() * 26)]); // Letra maiúscula\r",
+											"senhaArray.push(chars[26 + Math.floor(Math.random() * 26)]); // Letra minúscula\r",
+											"senhaArray.push(chars[52 + Math.floor(Math.random() * 10)]); // Dígito\r",
+											"senhaArray.push(chars[62 + Math.floor(Math.random() * 4)]); // Símbolo\r",
+											"    let comprimentoRestante = Math.floor(Math.random() * (comprimentoMaximo - comprimentoMinimo + 1)) + comprimentoMinimo - senhaArray.length;\r",
+											"    for (let i = 0; i < comprimentoRestante; i++) {\r",
+											"senhaArray.push(chars[Math.floor(Math.random() * chars.length)]);\r",
+											"\r",
+											"}\r",
+											"    return shuffleString(senhaArray.join(\"\"));\r",
+											"\r",
+											"}\r",
+											"\r",
+											"function shuffleString(string) {\r",
+											"    return string.split(\"\").sort(() => Math.random() - 0.5).join(\"\");\r",
+											"\r",
+											"}\r",
+											"\r",
+											"pm.environment.set(\"Password\", generatePassword());\r",
+											"\r",
+											"\r",
+											"function accessProfile() {\r",
+											"\r",
+											"    let accessProfile = [\"ADMIN\"];\r",
+											"\r",
+											"    let randomItem = accessProfile[Math.floor(Math.random() * accessProfile.length)];\r",
+											"\r",
+											"    return randomItem\r",
+											"\r",
+											"}\r",
+											"\r",
+											"pm.environment.set(\"AccessProfile\", accessProfile());\r",
+											"\r",
+											"function providerMail() {\r",
+											"\r",
+											"    let providerMail = [\"@yahoo.com.br\", \"@gmail.com\", \"@hotmail.com\", \"@uol.com.br\"];\r",
+											"    let randomItem = providerMail[Math.floor(Math.random() * providerMail.length)];\r",
+											"\r",
+											"    return randomItem\r",
+											"\r",
+											"}\r",
+											"\r",
+											"pm.environment.set(\"ProviderMail\", providerMail()),\r",
+											"\r",
+											"pm.environment.set(\"Mail\", pm.environment.get(\"FirstName\") + \"_\" + pm.variables.replaceIn('{{$guid}}') + pm.environment.get(\"ProviderMail\"))\r",
+											"\r",
+											"function randomCPF() {\r",
+											"\r",
+											"    let randomCPF = '';\r",
+											"    for (let i = 0; i < 11; i++) {\r",
+											"        randomCPF += (Math.floor(Math.random() * 10).toString());\r",
+											"        \r",
+											"    }\r",
+											"\r",
+											"   return randomCPF;\r",
+											"\r",
+											"}\r",
+											"\r",
+											"pm.environment.set(\"CPF\", randomCPF());\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Verify message register\", () => {\r",
+											"pm.environment.set(\"Message\",'Olá ${pm.environment.get(\"FullName\")}, cadastro realizado com sucesso.')\r",
+											"\r",
+											"})\r",
+											"\r",
+											"pm.test(\"Check is fullName true\", function(){\r",
+											"    pm.expect(pm.environment.get(\"FullName\")).to.eql(JSON.parse(responseBody).user.fullName);\r",
+											"})\r",
+											"\r",
+											"pm.test(\"Check is mail true\", function(){\r",
+											"    pm.expect(pm.environment.get(\"Mail\")).to.eql(JSON.parse(responseBody).user.mail)\r",
+											"})\r",
+											"\r",
+											"pm.test(\"check is accessProfile true\", function(){\r",
+											"    pm.expect(pm.environment.get(\"AccessProfile\")).to.eql(JSON.parse(responseBody).user.accessProfile)\r",
+											"})\r",
+											"\r",
+											"pm.test(\"check is status true\", function(){\r",
+											"    pm.expect(true).to.eql(JSON.parse(responseBody).user.status)\r",
+											"})\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"fullName\": \"{{FullName}}\",\r\n    \"mail\": \"{{Mail}}\",\r\n    \"password\": \"{{Password}}\",\r\n    \"accessProfile\": \"{{AccessProfile}}\",\r\n    \"cpf\": \"{{CPF}}\",\r\n    \"confirmPassword\": \"{{Password}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}user/",
+									"host": [
+										"{{url}}user"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "login user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Check is token exist\", function(){\r",
+											"   pm.expect(JSON.parse(responseBody).token).to.exist;\r",
+											"})\r",
+											"\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.globals.set(\"tokenUser\", pm.response.json().token)\r",
+											"\r",
+											"pm.environment.set(\"IdUser\", pm.response.json().user._id)\r",
+											"\r",
+											"\r",
+											"pm.test(\"Check is fullName true\", function(){\r",
+											" pm.expect(pm.environment.get(\"FullName\")).to.eql(JSON.parse(responseBody).user.fullName);\r",
+											"})\r",
+											"\r",
+											"pm.test(\"Check is mail true\", function(){\r",
+											" pm.expect(pm.environment.get(\"Mail\")).to.eql(JSON.parse(responseBody).user.mail);\r",
+											"})\r",
+											"\r",
+											"pm.test(\"Check is accessProfile true\", function(){\r",
+											" pm.expect(pm.environment.get(\"AccessProfile\")).to.eql(JSON.parse(responseBody).user.accessProfile);\r",
+											"})\r",
+											"\r",
+											"pm.test(\"Check is status true\", function(){\r",
+											" pm.expect(true).to.eql(JSON.parse(responseBody).user.status);\r",
+											"})"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"mail\": \"{{Mail}}\",\r\n    \"password\": \"{{Password}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}login/",
+									"host": [
+										"{{url}}login"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Verify tho message delete\", () => {\r",
+											"    pm.environment.set(\"Message\", 'Usuário deletado com sucesso!.')\r",
+											"})\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"function firstName() {\r",
+											"\r",
+											"    let firstName = [\"Rebeca\", \"Joao\", \"Pedro\", \"Kaike\", \"Flavia\", \"Renato\", \"Brenda\", \"Adriamo\", \"Carla\", \"Gledson\", \"Rodrigo\", \"Pablo\", \"Raissa\", \"Yasmin\", \"William\", \"Maria\", \"Marta\", \"Mitra\", \"Liza\", \"Renata\", \"Laryssa\", \"Walter\", \"Eude\", \"Rafaela\", \"Claudia\", \"Edson\", \"Kailza\", \"Cleide\", \"Vanda\", \"Jhonata\", \"Joelma\", \"Gilda\", \"Leide\", \"Silvia\", \"Sandra\", \"Deibson\", \"Kailane\", \"Silvane\", \"Jose\", \"Jair\", \"Claudio\", \"Silmara\", \"Gilmara\", \"Leila\", \"Joab\", \"Josenildo\", \"Camila\", \"Joseane\", \"Edcleia\", \"Edmundo\", \"Josimar\", \"Jacinta\", \"Zila\", \"Keniel\", \"Geilsa\", \"Ludimila\", \"Mirly\", \"Genari\", \"Daniel\", \"Danilo\", \"Janice\", \"Ana\", \"Gilberto\", \"Edilson\", \"Sircleide\", \"Jailso\"]\r",
+											"\r",
+											"    let randomItem = firstName[Math.floor(Math.random() * firstName.length)];\r",
+											"\r",
+											"    return randomItem\r",
+											"\r",
+											"} \r",
+											"\r",
+											"pm.environment.set(\"FirstName\", firstName());\r",
+											"\r",
+											"  \r",
+											"function lastName() {\r",
+											"\r",
+											"    let lastName = [\"Alves de Sousa\", \"Silva Santos\", \"Alves de Melo\", \"de Sousa\", \"Campo de Melo\", \"Henrique de Lima\", \"Joaquim de Carvalho\", \"Jorge de Melo\", \"da Silva Neto\", \"de Sousa Carvalho\", \"Campos da Silva\", \"Rodrigues da Silva\", \"Campos Sobral\", \"Campos de Melo\", \"Rocha de Macedo\", \"Ferreira de Melo\", \"Ferreira de Sousa\", \"Campos Sobral da Silva\", \"Jorge de Melo Junior\", \"de Freita\", \"Rocha da Silva Carvalho\", \"de Lima Ferreira Neto\", \"Campos de Melo Silva\", \"Campos Rodrigues da Silva\", \"Alves de Macedo Sousa\"];\r",
+											"\r",
+											"    let randomItem = lastName[Math.floor(Math.random() * lastName.length)];\r",
+											"\r",
+											"    return randomItem\r",
+											"\r",
+											"}\r",
+											"\r",
+											"pm.environment.set(\"LastName\", lastName());\r",
+											"\r",
+											"pm.environment.set(\"FullName\", pm.environment.get(\"FirstName\") + \" \" + pm.environment.get(\"LastName\"));\r",
+											"\r",
+											"\r",
+											"function generatePassword() {\r",
+											"    let chars = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%\";\r",
+											"    let comprimentoMinimo = 8;\r",
+											"    let comprimentoMaximo = 12;\r",
+											"    let senhaArray = [];\r",
+											"senhaArray.push(chars[Math.floor(Math.random() * 26)]); // Letra maiúscula\r",
+											"senhaArray.push(chars[26 + Math.floor(Math.random() * 26)]); // Letra minúscula\r",
+											"senhaArray.push(chars[52 + Math.floor(Math.random() * 10)]); // Dígito\r",
+											"senhaArray.push(chars[62 + Math.floor(Math.random() * 4)]); // Símbolo\r",
+											"    let comprimentoRestante = Math.floor(Math.random() * (comprimentoMaximo - comprimentoMinimo + 1)) + comprimentoMinimo - senhaArray.length;\r",
+											"    for (let i = 0; i < comprimentoRestante; i++) {\r",
+											"senhaArray.push(chars[Math.floor(Math.random() * chars.length)]);\r",
+											"\r",
+											"}\r",
+											"    return shuffleString(senhaArray.join(\"\"));\r",
+											"\r",
+											"}\r",
+											"\r",
+											"function shuffleString(string) {\r",
+											"    return string.split(\"\").sort(() => Math.random() - 0.5).join(\"\");\r",
+											"\r",
+											"}\r",
+											"\r",
+											"pm.environment.set(\"Password\", generatePassword());\r",
+											"\r",
+											"\r",
+											"function accessProfile() {\r",
+											"\r",
+											"    let accessProfile = [\"ADMIN\"];\r",
+											"\r",
+											"    let randomItem = accessProfile[Math.floor(Math.random() * accessProfile.length)];\r",
+											"\r",
+											"    return randomItem\r",
+											"\r",
+											"}\r",
+											"\r",
+											"pm.environment.set(\"AccessProfile\", accessProfile());\r",
+											"\r",
+											"function providerMail() {\r",
+											"\r",
+											"    let providerMail = [\"@yahoo.com.br\", \"@gmail.com\", \"@hotmail.com\", \"@uol.com.br\"];\r",
+											"    let randomItem = providerMail[Math.floor(Math.random() * providerMail.length)];\r",
+											"\r",
+											"    return randomItem\r",
+											"\r",
+											"}\r",
+											"\r",
+											"pm.environment.set(\"ProviderMail\", providerMail()),\r",
+											"\r",
+											"pm.environment.set(\"Mail\", pm.environment.get(\"FirstName\") + \"_\" + pm.variables.replaceIn('{{$guid}}') + pm.environment.get(\"ProviderMail\"))\r",
+											"\r",
+											"function randomCPF() {\r",
+											"\r",
+											"    let randomCPF = '';\r",
+											"    for (let i = 0; i < 11; i++) {\r",
+											"        randomCPF += (Math.floor(Math.random() * 10).toString());\r",
+											"        \r",
+											"    }\r",
+											"\r",
+											"   return randomCPF;\r",
+											"\r",
+											"}\r",
+											"\r",
+											"pm.environment.set(\"CPF\", randomCPF());\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}user/{{IdUser}}",
+									"host": [
+										"{{url}}user"
+									],
+									"path": [
+										"{{IdUser}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "create user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify message register\", () => {\r",
+									"pm.environment.set(\"Message\",'Olá ${pm.environment.get(\"FullName\")}, cadastro realizado com sucesso.')\r",
+									"\r",
+									"})\r",
+									"pm.environment.set(\"IdUserCreate\", pm.response.json().user._id)\r",
+									"\r",
+									"pm.test(\"Check is fullName true\", function(){\r",
+									"    pm.expect(pm.environment.get(\"FullName\")).to.eql(JSON.parse(responseBody).user.fullName);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Check is mail true\", function(){\r",
+									"    pm.expect(pm.environment.get(\"Mail\")).to.eql(JSON.parse(responseBody).user.mail)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"check is accessProfile true\", function(){\r",
+									"    pm.expect(pm.environment.get(\"AccessProfile\")).to.eql(JSON.parse(responseBody).user.accessProfile)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"check is status true\", function(){\r",
+									"    pm.expect(true).to.eql(JSON.parse(responseBody).user.status)\r",
+									"})\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function firstName() {\r",
+									"\r",
+									"    let firstName = [\"Rebeca\", \"Joao\", \"Pedro\", \"Kaike\", \"Flavia\", \"Renato\", \"Brenda\", \"Adriamo\", \"Carla\", \"Gledson\", \"Rodrigo\", \"Pablo\", \"Raissa\", \"Yasmin\", \"William\", \"Maria\", \"Marta\", \"Mitra\", \"Liza\", \"Renata\", \"Laryssa\", \"Walter\", \"Eude\", \"Rafaela\", \"Claudia\", \"Edson\", \"Kailza\", \"Cleide\", \"Vanda\", \"Jhonata\", \"Joelma\", \"Gilda\", \"Leide\", \"Silvia\", \"Sandra\", \"Deibson\", \"Kailane\", \"Silvane\", \"Jose\", \"Jair\", \"Claudio\", \"Silmara\", \"Gilmara\", \"Leila\", \"Joab\", \"Josenildo\", \"Camila\", \"Joseane\", \"Edcleia\", \"Edmundo\", \"Josimar\", \"Jacinta\", \"Zila\", \"Keniel\", \"Geilsa\", \"Ludimila\", \"Mirly\", \"Genari\", \"Daniel\", \"Danilo\", \"Janice\", \"Ana\", \"Gilberto\", \"Edilson\", \"Sircleide\", \"Jailso\"]\r",
+									"\r",
+									"    let randomItem = firstName[Math.floor(Math.random() * firstName.length)];\r",
+									"\r",
+									"    return randomItem\r",
+									"\r",
+									"} \r",
+									"\r",
+									"pm.environment.set(\"FirstName\", firstName());\r",
+									"\r",
+									"  \r",
+									"function lastName() {\r",
+									"\r",
+									"    let lastName = [\"Alves de Sousa\", \"Silva Santos\", \"Alves de Melo\", \"de Sousa\", \"Campo de Melo\", \"Henrique de Lima\", \"Joaquim de Carvalho\", \"Jorge de Melo\", \"da Silva Neto\", \"de Sousa Carvalho\", \"Campos da Silva\", \"Rodrigues da Silva\", \"Campos Sobral\", \"Campos de Melo\", \"Rocha de Macedo\", \"Ferreira de Melo\", \"Ferreira de Sousa\", \"Campos Sobral da Silva\", \"Jorge de Melo Junior\", \"de Freita\", \"Rocha da Silva Carvalho\", \"de Lima Ferreira Neto\", \"Campos de Melo Silva\", \"Campos Rodrigues da Silva\", \"Alves de Macedo Sousa\"];\r",
+									"\r",
+									"    let randomItem = lastName[Math.floor(Math.random() * lastName.length)];\r",
+									"\r",
+									"    return randomItem\r",
+									"\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"LastName\", lastName());\r",
+									"\r",
+									"pm.environment.set(\"FullName\", pm.environment.get(\"FirstName\") + \" \" + pm.environment.get(\"LastName\"));\r",
+									"\r",
+									"\r",
+									"function generatePassword() {\r",
+									"    let chars = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%\";\r",
+									"    let comprimentoMinimo = 8;\r",
+									"    let comprimentoMaximo = 12;\r",
+									"    let senhaArray = [];\r",
+									"senhaArray.push(chars[Math.floor(Math.random() * 26)]); // Letra maiúscula\r",
+									"senhaArray.push(chars[26 + Math.floor(Math.random() * 26)]); // Letra minúscula\r",
+									"senhaArray.push(chars[52 + Math.floor(Math.random() * 10)]); // Dígito\r",
+									"senhaArray.push(chars[62 + Math.floor(Math.random() * 4)]); // Símbolo\r",
+									"    let comprimentoRestante = Math.floor(Math.random() * (comprimentoMaximo - comprimentoMinimo + 1)) + comprimentoMinimo - senhaArray.length;\r",
+									"    for (let i = 0; i < comprimentoRestante; i++) {\r",
+									"senhaArray.push(chars[Math.floor(Math.random() * chars.length)]);\r",
+									"\r",
+									"}\r",
+									"    return shuffleString(senhaArray.join(\"\"));\r",
+									"\r",
+									"}\r",
+									"\r",
+									"function shuffleString(string) {\r",
+									"    return string.split(\"\").sort(() => Math.random() - 0.5).join(\"\");\r",
+									"\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"Password\", generatePassword());\r",
+									"\r",
+									"\r",
+									"function accessProfile() {\r",
+									"\r",
+									"    let accessProfile = [\"ADMIN\"];\r",
+									"\r",
+									"    let randomItem = accessProfile[Math.floor(Math.random() * accessProfile.length)];\r",
+									"\r",
+									"    return randomItem\r",
+									"\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"AccessProfile\", accessProfile());\r",
+									"\r",
+									"function providerMail() {\r",
+									"\r",
+									"    let providerMail = [\"@yahoo.com.br\", \"@gmail.com\", \"@hotmail.com\", \"@uol.com.br\"];\r",
+									"    let randomItem = providerMail[Math.floor(Math.random() * providerMail.length)];\r",
+									"\r",
+									"    return randomItem\r",
+									"\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"ProviderMail\", providerMail()),\r",
+									"\r",
+									"pm.environment.set(\"Mail\", pm.environment.get(\"FirstName\") + \"_\" + pm.variables.replaceIn('{{$guid}}') + pm.environment.get(\"ProviderMail\"))\r",
+									"\r",
+									"function randomCPF() {\r",
+									"\r",
+									"    let randomCPF = '';\r",
+									"    for (let i = 0; i < 11; i++) {\r",
+									"        randomCPF += (Math.floor(Math.random() * 10).toString());\r",
+									"        \r",
+									"    }\r",
+									"\r",
+									"   return randomCPF;\r",
+									"\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"CPF\", randomCPF());\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fullName\": \"{{FullName}}\",\r\n    \"mail\": \"{{Mail}}\",\r\n    \"password\": \"{{Password}}\",\r\n    \"accessProfile\": \"{{AccessProfile}}\",\r\n    \"cpf\": \"{{CPF}}\",\r\n    \"confirmPassword\": \"{{Password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}user/",
+							"host": [
+								"{{url}}user"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "consult the user id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Check is fullName true\", function(){\r",
+									"    pm.expect(pm.environment.get(\"FullName\")).to.eql(pm.response.json().fullName);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Check is mail true\", function(){\r",
+									"    pm.expect(pm.environment.get(\"Mail\")).to.eql(pm.response.json().mail)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"check is accessProfile true\", function(){\r",
+									"    pm.expect(pm.environment.get(\"AccessProfile\")).to.eql(pm.response.json().accessProfile)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"check is status true\", function(){\r",
+									"    pm.expect(true).to.eql(pm.response.json().status)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"check is id true\", function(){\r",
+									"    pm.expect(pm.environment.get(\"IdUserCreate\")).to.eql(pm.response.json()._id)\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}user/{{IdUserCreate}}",
+							"host": [
+								"{{url}}user"
+							],
+							"path": [
+								"{{IdUserCreate}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user count",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"O campo 'count' não está vazio\", function() {\r",
+									"    var jsonResponse = pm.response.json(); // Obtém a resposta em formato JSON\r",
+									"    pm.expect(jsonResponse.count).to.be.a('number'); // Verifica se 'count' é um número\r",
+									"    pm.expect(jsonResponse.count).to.be.above(0); // Verifica se o 'count' é maior que 0\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}user/count",
+							"host": [
+								"{{url}}user"
+							],
+							"path": [
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit fullName mail",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function firstName() {\r",
+									"\r",
+									"    let firstName = [\"Rebeca\", \"Joao\", \"Pedro\", \"Kaike\", \"Flavia\", \"Renato\", \"Brenda\", \"Adriamo\", \"Carla\", \"Gledson\", \"Rodrigo\", \"Pablo\", \"Raissa\", \"Yasmin\", \"William\", \"Maria\", \"Marta\", \"Mitra\", \"Liza\", \"Renata\", \"Laryssa\", \"Walter\", \"Eude\", \"Rafaela\", \"Claudia\", \"Edson\", \"Kailza\", \"Cleide\", \"Vanda\", \"Jhonata\", \"Joelma\", \"Gilda\", \"Leide\", \"Silvia\", \"Sandra\", \"Deibson\", \"Kailane\", \"Silvane\", \"Jose\", \"Jair\", \"Claudio\", \"Silmara\", \"Gilmara\", \"Leila\", \"Joab\", \"Josenildo\", \"Camila\", \"Joseane\", \"Edcleia\", \"Edmundo\", \"Josimar\", \"Jacinta\", \"Zila\", \"Keniel\", \"Geilsa\", \"Ludimila\", \"Mirly\", \"Genari\", \"Daniel\", \"Danilo\", \"Janice\", \"Ana\", \"Gilberto\", \"Edilson\", \"Sircleide\", \"Jailso\"]\r",
+									"\r",
+									"    let randomItem = firstName[Math.floor(Math.random() * firstName.length)];\r",
+									"\r",
+									"    return randomItem\r",
+									"\r",
+									"} \r",
+									"\r",
+									"pm.environment.set(\"FirstName\", firstName());\r",
+									"\r",
+									"  \r",
+									"function lastName() {\r",
+									"\r",
+									"    let lastName = [\"Alves de Sousa\", \"Silva Santos\", \"Alves de Melo\", \"de Sousa\", \"Campo de Melo\", \"Henrique de Lima\", \"Joaquim de Carvalho\", \"Jorge de Melo\", \"da Silva Neto\", \"de Sousa Carvalho\", \"Campos da Silva\", \"Rodrigues da Silva\", \"Campos Sobral\", \"Campos de Melo\", \"Rocha de Macedo\", \"Ferreira de Melo\", \"Ferreira de Sousa\", \"Campos Sobral da Silva\", \"Jorge de Melo Junior\", \"de Freita\", \"Rocha da Silva Carvalho\", \"de Lima Ferreira Neto\", \"Campos de Melo Silva\", \"Campos Rodrigues da Silva\", \"Alves de Macedo Sousa\"];\r",
+									"\r",
+									"    let randomItem = lastName[Math.floor(Math.random() * lastName.length)];\r",
+									"\r",
+									"    return randomItem\r",
+									"\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"LastName\", lastName());\r",
+									"\r",
+									"pm.environment.set(\"FullNameEdit\", pm.environment.get(\"FirstName\") + \" \" + pm.environment.get(\"LastName\"));\r",
+									"\r",
+									"\r",
+									"function providerMail() {\r",
+									"\r",
+									"    let providerMail = [\"@yahoo.com.br\", \"@gmail.com\", \"@hotmail.com\", \"@uol.com.br\"];\r",
+									"    let randomItem = providerMail[Math.floor(Math.random() * providerMail.length)];\r",
+									"\r",
+									"    return randomItem\r",
+									"\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"ProviderMail\", providerMail()),\r",
+									"\r",
+									"pm.environment.set(\"MailEdit\", pm.environment.get(\"FirstName\") + \"_\" + pm.variables.replaceIn('{{$guid}}') + pm.environment.get(\"ProviderMail\"))\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate authenticate msg\", function () {\r",
+									"pm.expect(pm.globals.get(\"MsgAuth\")).to.eql(pm.response.json().message);\r",
+									"\r",
+									"})\r",
+									"\r",
+									"pm.test(\"check is id true\", function(){\r",
+									"    pm.expect(pm.environment.get(\"IdUserCreate\")).to.eql(pm.response.json().updatedUser._id)\r",
+									"})\r",
+									"\r",
+									"\r",
+									"pm.test(\"Check is fullName true\", function(){\r",
+									"    pm.expect(pm.environment.get(\"FullNameEdit\")).to.eql(pm.response.json().updatedUser.fullName);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Check is mail true\", function(){\r",
+									"    pm.expect(pm.environment.get(\"MailEdit\")).to.eql(pm.response.json().updatedUser.mail)\r",
+									"})\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{tokenUser}}",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fullName\": \"{{FullNameEdit}}\",\r\n    \"mail\": \"{{MailEdit}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}user/{{IdUserCreate}}",
+							"host": [
+								"{{url}}user"
+							],
+							"path": [
+								"{{IdUserCreate}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "status",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate authenticate msg\", function () {\r",
+									"pm.expect(pm.globals.get(\"MsgStatus\")).to.eql(pm.response.json().msg);\r",
+									"\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"status\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}user/status/{{IdUserCreate}}",
+							"host": [
+								"{{url}}user"
+							],
+							"path": [
+								"status",
+								"{{IdUserCreate}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate authenticate msg\", function () {\r",
+									"pm.expect(pm.globals.get(\"MsgPassword\")).to.eql(pm.response.json().msg);\r",
+									"\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function generatePassword() {\r",
+									"    let chars = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%\";\r",
+									"    let comprimentoMinimo = 8;\r",
+									"    let comprimentoMaximo = 12;\r",
+									"    let senhaArray = [];\r",
+									"senhaArray.push(chars[Math.floor(Math.random() * 26)]); // Letra maiúscula\r",
+									"senhaArray.push(chars[26 + Math.floor(Math.random() * 26)]); // Letra minúscula\r",
+									"senhaArray.push(chars[52 + Math.floor(Math.random() * 10)]); // Dígito\r",
+									"senhaArray.push(chars[62 + Math.floor(Math.random() * 4)]); // Símbolo\r",
+									"    let comprimentoRestante = Math.floor(Math.random() * (comprimentoMaximo - comprimentoMinimo + 1)) + comprimentoMinimo - senhaArray.length;\r",
+									"    for (let i = 0; i < comprimentoRestante; i++) {\r",
+									"senhaArray.push(chars[Math.floor(Math.random() * chars.length)]);\r",
+									"\r",
+									"}\r",
+									"    return shuffleString(senhaArray.join(\"\"));\r",
+									"\r",
+									"}\r",
+									"\r",
+									"function shuffleString(string) {\r",
+									"    return string.split(\"\").sort(() => Math.random() - 0.5).join(\"\");\r",
+									"\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"PasswordEdit\", generatePassword());\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{tokenUser}}",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"{{PasswordEdit}}\",\r\n    \"confirmPassword\": \"{{PasswordEdit}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}user/password/{{IdUserCreate}}",
+							"host": [
+								"{{url}}user"
+							],
+							"path": [
+								"password",
+								"{{IdUserCreate}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Validate authenticate msg\", function () {\r",
+									"pm.expect(pm.globals.get(\"MsgDelete\")).to.eql(pm.response.json().msg);\r",
+									"\r",
+									"})\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function firstName() {\r",
+									"\r",
+									"    let firstName = [\"Rebeca\", \"Joao\", \"Pedro\", \"Kaike\", \"Flavia\", \"Renato\", \"Brenda\", \"Adriamo\", \"Carla\", \"Gledson\", \"Rodrigo\", \"Pablo\", \"Raissa\", \"Yasmin\", \"William\", \"Maria\", \"Marta\", \"Mitra\", \"Liza\", \"Renata\", \"Laryssa\", \"Walter\", \"Eude\", \"Rafaela\", \"Claudia\", \"Edson\", \"Kailza\", \"Cleide\", \"Vanda\", \"Jhonata\", \"Joelma\", \"Gilda\", \"Leide\", \"Silvia\", \"Sandra\", \"Deibson\", \"Kailane\", \"Silvane\", \"Jose\", \"Jair\", \"Claudio\", \"Silmara\", \"Gilmara\", \"Leila\", \"Joab\", \"Josenildo\", \"Camila\", \"Joseane\", \"Edcleia\", \"Edmundo\", \"Josimar\", \"Jacinta\", \"Zila\", \"Keniel\", \"Geilsa\", \"Ludimila\", \"Mirly\", \"Genari\", \"Daniel\", \"Danilo\", \"Janice\", \"Ana\", \"Gilberto\", \"Edilson\", \"Sircleide\", \"Jailso\"]\r",
+									"\r",
+									"    let randomItem = firstName[Math.floor(Math.random() * firstName.length)];\r",
+									"\r",
+									"    return randomItem\r",
+									"\r",
+									"} \r",
+									"\r",
+									"pm.environment.set(\"FirstName\", firstName());\r",
+									"\r",
+									"  \r",
+									"function lastName() {\r",
+									"\r",
+									"    let lastName = [\"Alves de Sousa\", \"Silva Santos\", \"Alves de Melo\", \"de Sousa\", \"Campo de Melo\", \"Henrique de Lima\", \"Joaquim de Carvalho\", \"Jorge de Melo\", \"da Silva Neto\", \"de Sousa Carvalho\", \"Campos da Silva\", \"Rodrigues da Silva\", \"Campos Sobral\", \"Campos de Melo\", \"Rocha de Macedo\", \"Ferreira de Melo\", \"Ferreira de Sousa\", \"Campos Sobral da Silva\", \"Jorge de Melo Junior\", \"de Freita\", \"Rocha da Silva Carvalho\", \"de Lima Ferreira Neto\", \"Campos de Melo Silva\", \"Campos Rodrigues da Silva\", \"Alves de Macedo Sousa\"];\r",
+									"\r",
+									"    let randomItem = lastName[Math.floor(Math.random() * lastName.length)];\r",
+									"\r",
+									"    return randomItem\r",
+									"\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"LastName\", lastName());\r",
+									"\r",
+									"pm.environment.set(\"FullName\", pm.environment.get(\"FirstName\") + \" \" + pm.environment.get(\"LastName\"));\r",
+									"\r",
+									"\r",
+									"function generatePassword() {\r",
+									"    let chars = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%\";\r",
+									"    let comprimentoMinimo = 8;\r",
+									"    let comprimentoMaximo = 12;\r",
+									"    let senhaArray = [];\r",
+									"senhaArray.push(chars[Math.floor(Math.random() * 26)]); // Letra maiúscula\r",
+									"senhaArray.push(chars[26 + Math.floor(Math.random() * 26)]); // Letra minúscula\r",
+									"senhaArray.push(chars[52 + Math.floor(Math.random() * 10)]); // Dígito\r",
+									"senhaArray.push(chars[62 + Math.floor(Math.random() * 4)]); // Símbolo\r",
+									"    let comprimentoRestante = Math.floor(Math.random() * (comprimentoMaximo - comprimentoMinimo + 1)) + comprimentoMinimo - senhaArray.length;\r",
+									"    for (let i = 0; i < comprimentoRestante; i++) {\r",
+									"senhaArray.push(chars[Math.floor(Math.random() * chars.length)]);\r",
+									"\r",
+									"}\r",
+									"    return shuffleString(senhaArray.join(\"\"));\r",
+									"\r",
+									"}\r",
+									"\r",
+									"function shuffleString(string) {\r",
+									"    return string.split(\"\").sort(() => Math.random() - 0.5).join(\"\");\r",
+									"\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"Password\", generatePassword());\r",
+									"\r",
+									"\r",
+									"function accessProfile() {\r",
+									"\r",
+									"    let accessProfile = [\"ADMIN\"];\r",
+									"\r",
+									"    let randomItem = accessProfile[Math.floor(Math.random() * accessProfile.length)];\r",
+									"\r",
+									"    return randomItem\r",
+									"\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"AccessProfile\", accessProfile());\r",
+									"\r",
+									"function providerMail() {\r",
+									"\r",
+									"    let providerMail = [\"@yahoo.com.br\", \"@gmail.com\", \"@hotmail.com\", \"@uol.com.br\"];\r",
+									"    let randomItem = providerMail[Math.floor(Math.random() * providerMail.length)];\r",
+									"\r",
+									"    return randomItem\r",
+									"\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"ProviderMail\", providerMail()),\r",
+									"\r",
+									"pm.environment.set(\"Mail\", pm.environment.get(\"FirstName\") + \"_\" + pm.variables.replaceIn('{{$guid}}') + pm.environment.get(\"ProviderMail\"))\r",
+									"\r",
+									"function randomCPF() {\r",
+									"\r",
+									"    let randomCPF = '';\r",
+									"    for (let i = 0; i < 11; i++) {\r",
+									"        randomCPF += (Math.floor(Math.random() * 10).toString());\r",
+									"        \r",
+									"    }\r",
+									"\r",
+									"   return randomCPF;\r",
+									"\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"CPF\", randomCPF());\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}user/{{IdUserCreate}}",
+							"host": [
+								"{{url}}user"
+							],
+							"path": [
+								"{{IdUserCreate}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "in",
+				"value": "header",
+				"type": "string"
+			},
+			{
+				"key": "value",
+				"value": "{{tokenAdmin}}",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "Authorization",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

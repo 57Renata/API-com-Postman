@@ -1,0 +1,39 @@
+{
+	"id": "0f927b75-4ce7-4d9d-8bd6-94a9234fe3ae",
+	"values": [
+		{
+			"key": "tokenAdmin",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "tokenUser",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "MsgStatus",
+			"value": "Status do usuario atualizado com sucesso para status true.",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "MsgPassword",
+			"value": "Senha atualizada com sucesso!",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "MsgDelete",
+			"value": "Usuário deletado com sucesso!.",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"name": "Globals",
+	"_postman_variable_scope": "globals",
+	"_postman_exported_at": "2024-11-26T18:56:44.712Z",
+	"_postman_exported_using": "Postman/11.20.0"
+}
