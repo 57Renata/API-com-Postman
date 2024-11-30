@@ -1,36 +1,41 @@
-name: login
- 
-on: 
+name: Newman Collection Test   
 
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-    
+on:
+
   workflow_dispatch:
- 
+  push:   
+
 jobs:
- build:
-    runs-on: ubuntu-latest
- 
+
+  build:
+    runs-on: ubuntu-latest       
+    
     steps:
-     - name: Step 1 Check version Newman and Node
-       uses: actions/checkout@v4
-       run: |
-              newman --version
-              node --version
- 
-     - name: Step 2 Install Newman-Reporter-Htmlextra
-       run: sudo npm install -g newman-reporter-htmlextra
-         
-     - name: Step 3 Execute collection
-       run: newman run ./login.json -e ./postman.json -g ./globals.json --delay-request 1 --reporters cli, -r htmlextra --reporter-htmlextra-export ./result/Report.html
-        
-     - name: Step 4 Archive production artifacts
-       uses: actions/upload-artifact@v4
-       with:
-               nome: report
-               path: ./result/Report.html
+    - name: Step 1 Check out repository
+      uses: actions/checkout@v4       
+    
+    - name: Verify versions
+      run: |
+        newman --version
+        node --version       
+    
+    - name: Step 2 Install Newman-Reporter-Htmlextra
+      run: sudo npm install -g newman-reporter-htmlextra      
+    
+    - name: Step 3 Execute collection
+      run: |
+        newman run ./login.json \
+          -e ./postman.json \
+          -g ./globals.json \
+          --delay-request 1 \
+          --reporters cli,htmlextra \
+          --reporter-htmlextra-export ./result/Report.html       
+          
+    - name: Step 4 Archive production artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: report
+        path: ./result/Report.html
 
 
           
